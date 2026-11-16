@@ -1,0 +1,11 @@
+name: argeement
+channels: [conda-forge, bioconda]
+dependencies:
+  - python>=3.10
+  - biopython
+  - pandas
+  - pyyaml
+  - snakemake-minimal
+  - mmseqs2
+  - git
+  - curl

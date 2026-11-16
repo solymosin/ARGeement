@@ -1,0 +1,27 @@
+# Pinned profile for samples analysed with AMRFinderPlus database 2026-08-07.1.
+# Only the differences are given; everything else comes from config.yaml.
+# Run: ./update.sh profiles/amrfinder-2026-08-07.yaml
+profile: amrfinder-2026-08-07
+
+databases:
+  amrfinder:
+    # directory of the local AMRFinderPlus database – SET to your own path,
+    # e.g. .../amrfinderplus/data/2026-08-07.1 (the download URL only serves the latest version)
+    local: ""
+    expect_version: 2026-08-07.1
+  card:
+    # pinned copy of CARD (unpacked directory or .tar.bz2);
+    # if empty, the latest CARD is downloaded
+    local: ""
+    expect_version: ""
+  resfinder:
+    ref: ""            # e.g. eecf0aa – the git commit pins the version
+    expect_version: ""
+  disinfinder:
+    local: ""          # e.g. .../resfinder/disinfinder_db (git repository)
+    ref: ""            # e.g. 09fc831
+    expect_version: ""
+  pointfinder:
+    local: ""          # e.g. .../resfinder/pointfinder_db (git repository)
+    ref: ""            # e.g. 44ce624
+    expect_version: ""

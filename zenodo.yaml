@@ -1,0 +1,27 @@
+# Settings of the argeement zenodo command: metadata of the Zenodo dataset record.
+# The first version is created once with NEW=1 ./publish_local.sh <package> (or argeement zenodo
+# --new); its id (printed at the end, also the number at the end of the record URL) is written here.
+# Every later release becomes a new version of this record.
+deposition_id: 24278769            # zenodo.org
+sandbox_deposition_id: 643117    # sandbox.zenodo.org (testing)
+
+title: "ARGeement: sequence-based, versioned mapping of antimicrobial resistance gene databases"
+creators:
+  - {name: "Vujić, Vesna", affiliation: "University of Veterinary Medicine Budapest", orcid: "0009-0004-7155-5414"}
+  - {name: "Helyes, Georgina", affiliation: "University of Veterinary Medicine Budapest", orcid: "0009-0009-4866-9604"}
+  - {name: "Tóth, Adrienn Gréta", affiliation: "University of Veterinary Medicine Budapest", orcid: "0009-0001-8047-9693"}
+  - {name: "Csabai, István", affiliation: "Eötvös Loránd University", orcid: "0000-0001-9232-9898"}
+  - {name: "Solymosi, Norbert", affiliation: "University of Veterinary Medicine Budapest; Eötvös Loránd University", orcid: "0000-0003-1783-2041"}
+description: >
+  <p>Protein-level mapping between the entries of AMRFinderPlus, CARD and ResFinder/DisinFinder,
+  with relation types from identical protein to homologue, difference counts, sequence-based
+  family clusters and harmonised drug classes. Each version of this record is one release built
+  from the database versions listed below; the concept DOI always resolves to the latest release.</p>
+keywords: [antimicrobial resistance, resistance gene databases, database harmonisation,
+           nomenclature, sequence-based mapping]
+# Licence of the data. The record contains no CARD material other than ARO accessions and terms
+# (CC-BY 4.0); the terms of the source databases are given in LICENSE.md of the archive and in the
+# description (argeement/terms.py).
+license: cc-by-4.0
+related_identifiers:
+  - {identifier: "https://github.com/solymosin/ARGeement", relation: isCompiledBy, resource_type: software}

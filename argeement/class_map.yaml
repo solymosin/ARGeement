@@ -1,0 +1,75 @@
+# Drug class harmonisation
+#
+# The databases use different vocabularies (AMRFinderPlus: BETA-LACTAM;
+# CARD: penam, cephalosporin, carbapenem ...; ResFinder: its own classes and file names).
+# Every native term (lower case) is mapped here to a common class.
+# Unmapped terms are listed separately in the report and should be added here.
+#
+# ambiguous: terms that may stand for several common classes
+# (e.g. ResFinder "folate pathway antagonist" = sulfonamide OR trimethoprim).
+# In that case a ResFinder entry takes its class from the name of its source file.
+
+ambiguous:
+  - folate pathway antagonist
+  - under investigation
+
+# ignore: terms that do not denote a class (not listed as unmapped)
+ignore:
+  - none
+  - antibiotic without defined classification
+  # CARD 4.0.2: only on CTX-M beta-lactamases, always together with "cephalosporin"; assigning
+  # them to Nitroimidazole would add 267 CTX-M entries. The report lists these terms with counts:
+  # if an update assigns them to other genes, it becomes visible there.
+  - azole antibiotic
+  - imidazole antibiotic
+
+terms:
+  Beta-lactam: [beta-lactam, beta_lactam, betalactam, penam, penem, cephalosporin, carbapenem,
+                monobactam, cephamycin, beta-lactam antibiotic, penicillin beta-lactam]
+  Aminoglycoside: [aminoglycoside, aminoglycoside antibiotic, aminocyclitol]
+  Quinolone: [quinolone, fluoroquinolone, fluoroquinolone antibiotic, quinolone antibiotic]
+  Tetracycline: [tetracycline, tetracyclines, tetracycline antibiotic, glycylcycline]
+  Macrolide: [macrolide, macrolide antibiotic]
+  Lincosamide: [lincosamide, lincosamide antibiotic]
+  Streptogramin: [streptogramin, streptogramin antibiotic, streptogramin a antibiotic,
+                  streptogramin b antibiotic, streptogramin a, streptogramin b]
+  Phenicol: [phenicol, phenicol antibiotic, amphenicol]
+  Sulfonamide: [sulfonamide, sulphonamide, sulfonamide antibiotic]
+  Trimethoprim: [trimethoprim, diaminopyrimidine antibiotic, diaminopyrimidine]
+  # CARD groups polymyxins, bacitracin and lipopeptides under a common "peptide antibiotic"
+  Polymyxin/peptide: [colistin, polymyxin, peptide antibiotic, polymyxin antibiotic,
+                      nonribosomal peptide antibiotics, bacitracin, lipopeptide]
+  # ribosomally synthesised peptides (thiopeptides, lasso peptides)
+  RiPP (thiopeptide, lasso peptide): [thiostrepton,
+      ribosomally synthesized and post-translationally modified peptide antibiotics,
+      lasso peptide antibiotics]
+  Fosfomycin: [fosfomycin, phosphonic acid antibiotic]
+  Glycopeptide: [glycopeptide, glycopeptide antibiotic]
+  Rifamycin: [rifampicin, rifamycin, rifamycin antibiotic]
+  Nitroimidazole: [nitroimidazole, nitroimidazole antibiotic]
+  Oxazolidinone: [oxazolidinone, oxazolidinone antibiotic]
+  Fusidic acid: [fusidic acid, fusidicacid, fusidane antibiotic, steroid antibacterial]
+  Mupirocin: [mupirocin, pseudomonic acid, pseudomonicacid, mupirocin-like antibiotic]
+  Nitrofuran: [nitrofuran, nitrofuran antibiotic]
+  Ionophore: [ionophore, ionophores]
+  Orthosomycin: [avilamycin, orthosomycin antibiotic]
+  Elfamycin: [elfamycin antibiotic, elfamycin]
+  Moenomycin: [moenomycin antibiotic, moenomycin]
+  Tuberactinomycin: [tuberactinomycin]
+  Isoniazid: [isoniazid-like antibiotic, isoniazid]
+  Bicyclomycin: [bicyclomycin-like antibiotic, bicyclomycin]
+  Tetracenomycin: [tetracenomycin]
+  Fatty acid: [antibacterial free fatty acids]
+  Pleuromutilin: [pleuromutilin, pleuromutilin antibiotic]
+  Bleomycin: [bleomycin]
+  Aminocoumarin: [aminocoumarin antibiotic, aminocoumarin]
+  Nucleoside/streptothricin: [nucleoside antibiotic, streptothricin]
+  Multidrug/efflux: [multidrug, efflux]
+  # not antibiotics: from DisinFinder and the STRESS part of AMRFinderPlus
+  Fluoride: [fluoride]
+  Heat stress: [heat]
+  Biocide/antiseptic: [disinfecting agents and antiseptics, antiseptic, biocide, quaternary ammonium,
+                       quaternary ammonium compounds, disinfectants, disinfectant, aldehydes,
+                       formaldehyde, chlorhexidine, triclosan, biguanides, alcohols, peroxides,
+                       peroxygens, phenolic compounds, phenols, hydrogen peroxide,
+                       cetylpyridinium chloride, benzalkonium chloride]

@@ -1,0 +1,32 @@
+# working directories and releases (releases are archived on Zenodo)
+work/
+releases/
+.snakemake/
+logs/
+# large files of the real-genome use case
+concordance/genomes/
+concordance/calls/
+concordance/db/
+# manuscript (not public)
+manuscript/
+# the web page lives on the gh-pages branch
+docs/
+site_preview/
+# credentials and state
+zenodo_state*.json
+*.token
+# local settings of a server (profiles with local paths, run scripts)
+profiles/dbs_*.yaml
+profiles/x_*.yaml
+run.sh
+saliva_dbs/
+# new versions of protected settings left by an update (update_code.sh)
+*.new
+# other
+__pycache__/
+*.pyc
+*.zip
+*.tar.gz
+
+# downloaded package directories belong outside the clone
+/package/

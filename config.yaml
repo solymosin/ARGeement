@@ -1,0 +1,64 @@
+# ARGeement configuration – default profile: always the latest databases.
+# For pinned versions create a profile file (see profiles/) and run:
+#   ./update.sh profiles/<name>.yaml
+# A profile file only needs the differences; everything else comes from here.
+profile: current     # releases are written to releases/<profile>/
+run_id: dev          # overwritten by update.sh (date-based)
+threads: 4
+mmseqs: mmseqs       # or a full path
+
+# Database sources. For each:
+#   url             – download URL (default: the latest version)
+#   local           – local source; if given, it is used instead of downloading
+#   expect_version  – if given and the parsed version does not contain it,
+#                     the run stops with an error (guards against accidental version changes)
+databases:
+  card:
+    url: https://card.mcmaster.ca/latest/data
+    local: ""          # unpacked broadstreet directory or .tar.bz2 file
+    expect_version: ""
+  amrfinder:
+    url: https://ftp.ncbi.nlm.nih.gov/pathogen/Antimicrobial_resistance/AMRFinderPlus/database/latest
+    local: ""          # e.g. .../share/amrfinderplus/data/2026-08-07.1
+    expect_version: ""
+  resfinder:
+    url: https://bitbucket.org/genomicepidemiology/resfinder_db.git
+    ref: ""            # git tag or commit for a pinned version (e.g. eecf0aa)
+    local: ""          # local directory or git repository
+    expect_version: ""
+  # DisinFinder (disinfectant and biocide resistance genes): a full fourth database
+  # in the mapping; enabled: false disables it
+  disinfinder:
+    enabled: true
+    url: https://bitbucket.org/genomicepidemiology/disinfinder_db.git
+    ref: ""
+    local: ""
+    expect_version: ""
+  # PointFinder (point mutations): inventory for the report only, not part of the mapping
+  pointfinder:
+    enabled: true
+    url: https://bitbucket.org/genomicepidemiology/pointfinder_db.git
+    ref: ""
+    local: ""
+    expect_version: ""
+
+amrfinder:
+  types: [AMR]               # STRESS, VIRULENCE kimarad
+  # mutation, gene-disruption and susceptibility references are excluded
+  exclude_subtypes: [POINT, POINT_DISRUPT, AMR-SUSCEPTIBLE]
+  # subtypes included regardless of type: biocide resistance genes (STRESS/BIOCIDE) can be
+  # compared with DisinFinder and the CARD class "disinfecting agents and antiseptics"
+  include_subtypes: [BIOCIDE]
+  scopes: [core, plus]
+
+# Thresholds
+params:
+  near_identical_pident: 98.0
+  near_identical_cov: 0.95
+  same_family_pident: 90.0
+  same_family_cov: 0.80
+  search_min_seq_id: 0.50
+  search_min_cov: 0.50
+  search_sensitivity: 7.5
+  search_max_seqs: 20000   # with 1000, close hits were truncated in large families (e.g. blaPDC)
+  top_k_weak: 3
