@@ -3,6 +3,9 @@
 # pinned profile (local directories + git ref), rerun without changes,
 # a second profile, diff between profiles, and the version check.
 set -euo pipefail
+# the caller's settings (e.g. FORCE=1 ./server_release.sh) must not reach the tested runs:
+# with FORCE inherited, the rerun in step 2 would build again instead of stopping
+unset FORCE
 SRC="$(cd "$(dirname "$0")/.." && pwd)"
 T=$(mktemp -d)
 # copy the code only: on a build server the directory also holds work/, releases/ and local data
