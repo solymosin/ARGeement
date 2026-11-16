@@ -2,6 +2,7 @@
 # Runs the whole chain on synthetic data (no downloads).
 set -euo pipefail
 cd "$(dirname "$0")/.."
+python3 tests/test_tie_order.py
 T=$(mktemp -d)
 python3 tests/make_test_data.py "$T/v1"
 python3 tests/make_test_data.py "$T/v2" --v2

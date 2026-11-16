@@ -112,8 +112,11 @@ def run_mmseqs(fasta, workdir, params, mmseqs_bin, threads):
     hits["n_diff"] = n_diff_from_alignment(hits["alnlen"], hits["nident"], hits["qstart"],
                                            hits["qend"], hits["qlen"], hits["tstart"],
                                            hits["tend"], hits["tlen"])
-    # best HSP per pair
-    hits = hits.sort_values("bits", ascending=False).drop_duplicates(["query", "target"])
+    # best HSP per pair; the full sort key makes the choice independent of the output order of
+    # MMseqs2, which varies with the threads and the composition of the database
+    hits = (hits.sort_values(["query", "target", "bits", "n_diff", "alnlen", "qstart", "tstart"],
+                             ascending=[True, True, False, True, False, True, True], kind="mergesort")
+                .drop_duplicates(["query", "target"]))
     return hits
 
 
@@ -126,6 +129,14 @@ def symmetrize_hits(hits):
     one with fewer differences, on a tie the higher bit score, as in the export) and used in both
     directions with the query- and target-specific fields swapped. Classification, coverage
     summary, family clusters and the export are thus based on the same value per pair.
+
+    If the two directions have the same number of differences and the same (integer) bit score,
+    the longer alignment is kept, then the one whose query comes first. Such ties are common: a
+    substitution at the last position whose score is zero is included in the local alignment in one
+    direction and left out in the other, and the identity of the shorter alignment is higher
+    (e.g. 98.1% instead of 97.9% with 8 differences), which can move the pair across the
+    near-identical threshold. Without a full sort key the choice depended on the order of the
+    MMseqs2 output, so the same pair could be classified differently in two builds.
     """
     if hits.empty:
         return hits
@@ -133,7 +144,9 @@ def symmetrize_hits(hits):
     a = h[["query", "target"]].min(axis=1)
     b = h[["query", "target"]].max(axis=1)
     h["_a"], h["_b"] = a, b
-    h = h.sort_values(["n_diff", "bits"], ascending=[True, False]).drop_duplicates(["_a", "_b"])
+    h = h.sort_values(["_a", "_b", "n_diff", "bits", "alnlen", "query"],
+                      ascending=[True, True, True, False, False, True], kind="mergesort") \
+         .drop_duplicates(["_a", "_b"])
     h = h.drop(columns=["_a", "_b"])
     swap = {"query": "target", "target": "query", "qstart": "tstart", "tstart": "qstart",
             "qend": "tend", "tend": "qend", "qlen": "tlen", "tlen": "qlen",
@@ -444,7 +457,8 @@ def family_labels(entries, hits, p, ambiguous_pp=1.0):
     if len(ok):
         ok = ok.assign(fam=ok["target"].map(direct))
         # best candidate per family, then the two best different families per protein
-        per_fam = ok.sort_values(["query", "n_diff", "bits"], ascending=[True, True, False]) \
+        per_fam = ok.sort_values(["query", "n_diff", "bits", "target"],
+                                 ascending=[True, True, False, True], kind="mergesort") \
                     .drop_duplicates(["query", "fam"])
         for q, g in per_fam.groupby("query", sort=False):
             first = g.iloc[0]
