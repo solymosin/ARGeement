@@ -2,8 +2,8 @@
 # The first version is created once with NEW=1 ./publish_local.sh <package> (or argeement zenodo
 # --new); its id (printed at the end, also the number at the end of the record URL) is written here.
 # Every later release becomes a new version of this record.
-deposition_id: 24278769            # zenodo.org
-sandbox_deposition_id: 643117    # sandbox.zenodo.org (testing)
+deposition_id: 24300987            # zenodo.org
+sandbox_deposition_id: 643450    # sandbox.zenodo.org (testing)
 
 title: "ARGeement: sequence-based, versioned mapping of antimicrobial resistance gene databases"
 creators:
