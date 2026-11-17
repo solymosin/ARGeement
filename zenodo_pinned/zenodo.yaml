@@ -1,0 +1,38 @@
+# Zenodo record of the pinned profile amrfinder-2026-08-07: a separate release series with its own
+# concept DOI. Never publish it with publish_local.sh (that uses ../zenodo.yaml and the web page).
+# First version:  python3 -m argeement zenodo --package ../../package_pinned --config zenodo_pinned/zenodo.yaml --new
+# Later versions: the same without --new (the state is kept in zenodo_pinned/zenodo_state.json)
+deposition_id: 24301243           # zenodo.org; concept DOI: 10.5281/zenodo.24301242
+sandbox_deposition_id: 643467     # sandbox.zenodo.org; concept: 10.5072/zenodo.643466
+
+title: "ARGeement: sequence-based, versioned mapping of antimicrobial resistance gene databases (pinned profile amrfinder-2026-08-07)"
+
+creators:
+  - {name: "Vujić, Vesna", affiliation: "University of Veterinary Medicine Budapest", orcid: "0009-0004-7155-5414"}
+  - {name: "Helyes, Georgina", affiliation: "University of Veterinary Medicine Budapest", orcid: "0009-0009-4866-9604"}
+  - {name: "Tóth, Adrienn Gréta", affiliation: "University of Veterinary Medicine Budapest", orcid: "0009-0001-8047-9693"}
+  - {name: "Csabai, István", affiliation: "Eötvös Loránd University", orcid: "0000-0001-9232-9898"}
+  - {name: "Solymosi, Norbert", affiliation: "University of Veterinary Medicine Budapest; Eötvös Loránd University", orcid: "0000-0003-1783-2041"}
+
+description: >
+  <p>Protein-level mapping between the entries of AMRFinderPlus, CARD and ResFinder/DisinFinder,
+  with relation types from identical protein to homologue, difference counts, sequence-based family
+  clusters and harmonised drug classes, built with the pinned profile
+  <code>amrfinder-2026-08-07</code> for samples analysed with AMRFinderPlus database 2026-08-07.1;
+  the other databases are pinned to the versions listed below. It is the reference release of the
+  version comparison in the ARGeement article. The releases of the default profile, built from the
+  latest database versions, are in a separate record (concept DOI
+  <a href="https://doi.org/10.5281/zenodo.24278768">10.5281/zenodo.24278768</a>).</p>
+
+keywords: [antimicrobial resistance, resistance gene databases, database harmonisation,
+           nomenclature, sequence-based mapping]
+
+license: cc-by-4.0
+
+related_identifiers:
+  - identifier: "https://github.com/solymosin/ARGeement"
+    relation: isCompiledBy
+    resource_type: software
+  - identifier: "10.5281/zenodo.24278768"
+    relation: isVariantFormOf
+    resource_type: dataset
