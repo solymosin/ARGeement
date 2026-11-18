@@ -5,7 +5,7 @@
 set -euo pipefail
 # the caller's settings (e.g. FORCE=1 ./server_release.sh) must not reach the tested runs:
 # with FORCE inherited, the rerun in step 2 would build again instead of stopping
-unset FORCE
+unset FORCE CHECK_ONLY
 SRC="$(cd "$(dirname "$0")/.." && pwd)"
 T=$(mktemp -d)
 # copy the code only: on a build server the directory also holds work/, releases/ and local data
@@ -73,6 +73,14 @@ echo "== 2. rerun without changes"
 sleep 1
 THREADS=2 ./update.sh "$T/pinned.yaml" 2>&1 | grep -q "No new database version"
 test "$(ls releases/pinned | grep -vc latest)" -eq 1
+
+echo "== 2b. version check only (CHECK_ONLY)"
+rc=0; CHECK_ONLY=1 THREADS=2 ./update.sh "$T/pinned.yaml" > "$T/log2b" 2>&1 || rc=$?
+{ test $rc -eq 0 && grep -q "No new database version" "$T/log2b"; } || { cat "$T/log2b"; exit 1; }
+rc=0; CHECK_ONLY=1 THREADS=2 ./update.sh "$T/newer.yaml" > "$T/log2c" 2>&1 || rc=$?
+test $rc -eq 10 || { cat "$T/log2c"; exit 1; }
+test "$(ls releases/pinned | grep -vc latest)" -eq 1
+test -z "$(ls releases/newer 2>/dev/null)"
 
 echo "== 3. second profile with its own release series"
 THREADS=2 ./update.sh "$T/newer.yaml" > "$T/log3" 2>&1 || { cat "$T/log3"; exit 1; }

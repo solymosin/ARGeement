@@ -5,6 +5,9 @@
 #   ./update.sh                       – default profile (config.yaml): the latest databases
 #   ./update.sh profiles/aug2026.yaml – pinned profile
 #   FORCE=1 ./update.sh ...           – new release even if no version has changed
+#   CHECK_ONLY=1 ./update.sh ...      – only check whether a database has a new version (download
+#                                       and parse, no build); exit code 0: no new version,
+#                                       10: new version, run the update (e.g. server_release.sh)
 #
 # Releases: releases/<profile>/<run>; releases/<profile>/latest points to the newest one.
 # Do not run two profiles at the same time (Snakemake locks the working directory).
@@ -29,7 +32,11 @@ EXTRA=()
 [[ "$PROFILE_FILE" != "config.yaml" ]] && EXTRA=(--configfile config.yaml "$PROFILE_FILE")
 # 1. download and parse (cheap), then compare versions: if nothing has changed, the expensive
 #    build is not started
-if [[ -n "$PREV" && -z "${FORCE:-}" ]]; then
+if [[ -n "${CHECK_ONLY:-}" && -z "$PREV" ]]; then
+    echo "[$PROFILE] No release yet: the first update builds one."
+    exit 10
+fi
+if [[ -n "$PREV" && ( -z "${FORCE:-}" || -n "${CHECK_ONLY:-}" ) ]]; then
     snakemake --cores "$THREADS" "${EXTRA[@]}" --config run_id="$RUN_ID" threads="$THREADS" \
         --until parse inventory_pointfinder
     if python3 - "$BASE/$PREV/manifest.json" "work/$PROFILE/$RUN_ID/std" << 'PY'
@@ -44,12 +51,20 @@ if inv.exists():
 # older manifests may lack a key (e.g. pointfinder): that is not treated as a change
 same = all(old.get(k, v) == v for k, v in new.items()) and set(old) <= set(new)
 print("versions:", ", ".join(f"{k} {v}" for k, v in sorted(new.items())))
+for k in sorted(set(old) | set(new)):
+    if old.get(k, new.get(k)) != new.get(k, old.get(k)):
+        print(f"  changed: {k}: {old.get(k, '-')} -> {new.get(k, '-')}")
 sys.exit(0 if same else 1)
 PY
     then
         echo "[$PROFILE] No new database version, the build is not started."
         rm -rf "work/$PROFILE/$RUN_ID"
         exit 0
+    fi
+    if [[ -n "${CHECK_ONLY:-}" ]]; then
+        echo "[$PROFILE] New database version; run the update to build a release."
+        rm -rf "work/$PROFILE/$RUN_ID"
+        exit 10
     fi
 fi
 
