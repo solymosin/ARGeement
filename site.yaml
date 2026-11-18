@@ -5,3 +5,10 @@ github: https://github.com/solymosin/ARGeement
 zenodo: ""          # concept DOI URL of the Zenodo record (also taken from zenodo.json after publication)
 zenodo_doi: ""      # version DOI of the current release (taken from zenodo.json after publication)
 paper: "https://doi.org/10.64898/2026.11.17.767227"
+# reference shown in the Citation section of the page (all values plain text)
+citation:
+  authors: "Vesna Vujić, Georgina Helyes, Adrienn Gréta Tóth, István Csabai, Norbert Solymosi"
+  title: "ARGeement: sequence-based, versioned mapping of antimicrobial resistance gene databases"
+  journal: "bioRxiv"
+  details: "2026.11.17.767227"
+  doi: "10.64898/2026.11.17.767227"

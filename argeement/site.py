@@ -192,6 +192,7 @@ figure{margin:1.2rem 0}figure img{max-width:100%;height:auto;background:#fff;bor
  border:1px solid var(--line)}figcaption{color:var(--muted);font-size:.88rem}
 code{background:var(--card);padding:.1rem .3rem;border-radius:4px}
 footer{margin-top:3rem;color:var(--muted);font-size:.85rem}
+.cite{padding-left:1rem;border-left:3px solid var(--muted)}
 """
 
 
@@ -290,6 +291,18 @@ def render(S, cfg, figs):
              + ". Translate a gene list with <code>argeement lookup</code>, search new sequences with "
                "<code>argeement query</code>.</p>")
     P.append("<h2>Licence</h2>" + licence_html())
+    c = cfg.get("citation") or {}
+    if c.get("title") and c.get("doi"):
+        doi = html.escape(c["doi"])
+        ref = (f"{html.escape(c.get('authors', ''))}. {html.escape(c['title'])}. "
+               f"<i>{html.escape(c.get('journal', ''))}</i> {html.escape(c.get('details', ''))}; "
+               f'doi: <a href="https://doi.org/{doi}">https://doi.org/{doi}</a>')
+        P.append("<h2>Citation</h2><p>If you use ARGeement, please cite:</p>"
+                 f'<p class="cite">{ref}</p>')
+        if cfg.get("zenodo_doi"):
+            z = html.escape(cfg["zenodo_doi"])
+            P.append("<p>Please also cite the release you used; this release: "
+                     f'<a href="https://doi.org/{z}">doi:{z}</a>.</p>')
     P.append(f"<footer>Generated from <code>{html.escape(S['release'])}</code> by ARGeement "
              f"{html.escape(str(S['argeement_version']))}. Machine-readable summary: "
              "<a href=\"summary.json\">summary.json</a>.</footer>")
