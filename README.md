@@ -267,3 +267,17 @@ The source databases have their own terms, which apply to anyone using them:
 | ResFinder, DisinFinder, PointFinder (CGE, DTU) | Apache License 2.0 |
 
 Running the pipeline downloads CARD; commercial users need a CARD licence for that.
+
+## Citation
+
+If you use ARGeement, please cite:
+
+Vesna Vujić, Georgina Helyes, Adrienn Gréta Tóth, István Csabai, Norbert Solymosi.
+ARGeement: sequence-based, versioned mapping of antimicrobial resistance gene databases.
+*bioRxiv* 2026.11.17.767227; doi: [https://doi.org/10.64898/2026.11.17.767227](https://doi.org/10.64898/2026.11.17.767227)
+
+Please also cite the release you used: releases are archived on Zenodo, where the concept DOI
+[10.5281/zenodo.24278768](https://doi.org/10.5281/zenodo.24278768) always resolves to the latest
+release and every release has its own version DOI.
+
+
