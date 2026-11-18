@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use ARGeement, please cite the preprint and the release you used."
+title: "ARGeement"
+type: software
+repository-code: "https://github.com/solymosin/ARGeement"
+license: MIT
+authors:
+  - {family-names: "Vujić", given-names: "Vesna"}
+  - {family-names: "Helyes", given-names: "Georgina"}
+  - {family-names: "Tóth", given-names: "Adrienn Gréta"}
+  - {family-names: "Csabai", given-names: "István"}
+  - {family-names: "Solymosi", given-names: "Norbert"}
+preferred-citation:
+  type: article
+  title: "ARGeement: sequence-based, versioned mapping of antimicrobial resistance gene databases"
+  journal: "bioRxiv"
+  year: 2026
+  doi: "10.64898/2026.11.17.767227"
+  authors:
+    - {family-names: "Vujić", given-names: "Vesna"}
+    - {family-names: "Helyes", given-names: "Georgina"}
+    - {family-names: "Tóth", given-names: "Adrienn Gréta"}
+    - {family-names: "Csabai", given-names: "István"}
+    - {family-names: "Solymosi", given-names: "Norbert"}
