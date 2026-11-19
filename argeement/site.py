@@ -88,6 +88,35 @@ class _Macros(dict):
         return "?"
 
 
+# Figures are shown at their print size times this factor, so that the lettering is the same size
+# in every figure (the R figures are PNGs at 200 dpi, the static ones SVGs sized in points).
+FIG_SCALE = 1.3
+
+
+def _display_width(path):
+    """Display width (CSS px) of a figure from its physical size; None if it cannot be read."""
+    import re
+    import struct
+    try:
+        if path.suffix == ".png":
+            b = path.read_bytes()
+            width = struct.unpack(">I", b[16:20])[0]
+            dpi = 200.0
+            i = b.find(b"pHYs")
+            if i > 0:
+                ppx, _, unit = struct.unpack(">IIB", b[i + 4:i + 13])
+                if unit == 1 and ppx:
+                    dpi = ppx * 0.0254
+            return round(width / dpi * 96 * FIG_SCALE)
+        if path.suffix == ".svg":
+            m = re.search(r'<svg[^>]*\swidth="([0-9.]+)(pt)?"', path.read_text(errors="ignore")[:2000])
+            if m:   # pdftocairo writes the size in points, without a unit
+                return round(float(m.group(1)) * 96 / 72 * FIG_SCALE)
+    except (OSError, struct.error, ValueError):
+        pass
+    return None
+
+
 def _caption(template, macros):
     """The caption with the values of the release; a missing value prints as ?."""
     return template.format_map(_Macros(macros or {}))
@@ -188,7 +217,7 @@ h1{font-size:1.8rem;margin:.2rem 0}h2{font-size:1.25rem;margin-top:2.4rem;
 .tw{overflow-x:auto}table{border-collapse:collapse;width:100%;margin:.8rem 0;font-size:.92rem}
 th,td{border-bottom:1px solid var(--line);padding:.35rem .6rem;text-align:right;white-space:nowrap}
 th:first-child,td:first-child{text-align:left}thead th{color:var(--muted);font-weight:600}
-figure{margin:1.2rem 0}figure img{max-width:100%;height:auto;background:#fff;border-radius:6px;
+figure{margin:1.6rem 0}figure img{display:block;margin:0 auto .5rem;max-width:100%;height:auto;background:#fff;border-radius:6px;
  border:1px solid var(--line)}figcaption{color:var(--muted);font-size:.88rem}
 code{background:var(--card);padding:.1rem .3rem;border-radius:4px}
 footer{margin-top:3rem;color:var(--muted);font-size:.85rem}
@@ -284,7 +313,9 @@ def render(S, cfg, figs):
         P.append("<h2>Figures</h2>")
         for i, (f, cap) in enumerate(figs, 1):
             alt = html.escape(__import__("re").sub(r"<[^>]+>", "", cap.split(". ")[0]))
-            P.append(f'<figure id="fig{i}"><img src="img/{f.name}" alt="{alt}" loading="lazy">'
+            w = _display_width(f)
+            wa = f' width="{w}"' if w else ""
+            P.append(f'<figure id="fig{i}"><img src="img/{f.name}"{wa} alt="{alt}" loading="lazy">'
                      f"<figcaption><b>Figure {i}.</b> {cap}</figcaption></figure>")
     P.append("<h2>Use</h2><p>Install and run the pipeline as described in the "
              + (f'<a href="{html.escape(cfg["github"])}#readme">README</a>' if cfg.get("github") else "README")
