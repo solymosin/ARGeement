@@ -1,0 +1,197 @@
+{
+  "release": "2026-11-16_184628",
+  "created": "2026-11-16T19:20:28+00:00",
+  "profile": "current",
+  "argeement_version": "0.1.0",
+  "mmseqs_version": "18.8cc5c",
+  "database_versions": {
+    "card": "4.0.2",
+    "amrfinder": "2026-10-29.1",
+    "resfinder": "2.7.0 (git eb6c21a)",
+    "disinfinder": "2.0.1 (git 09fc831)",
+    "pointfinder": "4.2.0 (git 3bd7d5e)"
+  },
+  "params": {
+    "near_identical_pident": 98.0,
+    "near_identical_cov": 0.95,
+    "same_family_pident": 90.0,
+    "same_family_cov": 0.8,
+    "search_min_seq_id": 0.5,
+    "search_min_cov": 0.5,
+    "search_sensitivity": 7.5,
+    "search_max_seqs": 20000,
+    "top_k_weak": 3
+  },
+  "databases": [
+    {
+      "db": "amrfinder",
+      "source_entries": 8633,
+      "protein_level_entries": 8633,
+      "unique_proteins": 8633
+    },
+    {
+      "db": "card",
+      "source_entries": 6059,
+      "protein_level_entries": 6059,
+      "unique_proteins": 6059
+    },
+    {
+      "db": "resfinder",
+      "source_entries": 3212,
+      "protein_level_entries": 3249,
+      "unique_proteins": 3162
+    },
+    {
+      "db": "disinfinder",
+      "source_entries": 16,
+      "protein_level_entries": 18,
+      "unique_proteins": 17
+    }
+  ],
+  "totals": {
+    "source_entries": 17920,
+    "protein_level_entries": 17959,
+    "unique_proteins": 9337,
+    "mappings": 2084605
+  },
+  "overlap": [
+    {
+      "db": "amrfinder",
+      "n": 8633,
+      "card": 0.8878721186146183,
+      "resfinder": 0.7760917409938608,
+      "disinfinder": 0.006139233175026063
+    },
+    {
+      "db": "card",
+      "n": 6059,
+      "amrfinder": 0.9608846344281234,
+      "resfinder": 0.7925400231061231,
+      "disinfinder": 0.0009902624195411785
+    },
+    {
+      "db": "resfinder",
+      "n": 3249,
+      "amrfinder": 0.9652200677131425,
+      "card": 0.8999692212988611,
+      "disinfinder": 0.0006155740227762388
+    },
+    {
+      "db": "disinfinder",
+      "n": 18,
+      "amrfinder": 0.6111111111111112,
+      "card": 0.3888888888888889,
+      "resfinder": 0.1111111111111111
+    }
+  ],
+  "relations": {
+    "near_identical": 1671070,
+    "same_family": 318443,
+    "length_variant": 36708,
+    "homolog": 36282,
+    "identical_protein": 22102
+  },
+  "name_concordance": {
+    "formatting": 6526,
+    "exact": 3111,
+    "case": 784,
+    "different_name": 381,
+    "allele_number_differs": 66,
+    "variant_suffix": 34,
+    "ncbi_synonym": 32,
+    "species_prefix": 20
+  },
+  "ncbi_validation": {
+    "ncbi_families": 1355,
+    "ncbi_families_split": 130,
+    "clusters": 1477,
+    "clusters_merged": 83
+  },
+  "validation": {
+    "release": "2026-11-16_184628",
+    "n_proteins": 500,
+    "n_cases": 5000,
+    "seed": 1,
+    "overall": {
+      "truth_found": 0.9956,
+      "truth_unique": 0.9904,
+      "relation_ok": 0.9954,
+      "ndiff_ok": 0.9894
+    }
+  },
+  "concordance": {
+    "release": "2026-11-16_184628",
+    "min_overlap": 0.8,
+    "genomes": 100,
+    "calls": {
+      "amrfinder": 1110,
+      "rgi": 3609,
+      "resfinder": 793
+    },
+    "pairs": [
+      {
+        "pair": "amrfinder-rgi",
+        "genomes": 100,
+        "loci_union": 3767,
+        "loci_matched": 952,
+        "loci_matched_multi_ref": 0,
+        "locus_concordance": 0.25272099814175736,
+        "name_concordance_before": 0.5609243697478992,
+        "after_identical": 593,
+        "after_strong": 295,
+        "after_same_family": 31,
+        "after_unrelated": 33,
+        "after_reference_missing": 0,
+        "name_concordance_after": 0.9327731092436975,
+        "only_amrfinder:counterpart_exists": 62.0,
+        "only_amrfinder:no_counterpart": 96.0,
+        "only_rgi:counterpart_exists": 130.0,
+        "only_rgi:no_counterpart": 2527.0,
+        "only_resfinder:counterpart_exists": null,
+        "only_resfinder:no_counterpart": null
+      },
+      {
+        "pair": "amrfinder-resfinder",
+        "genomes": 100,
+        "loci_union": 1183,
+        "loci_matched": 720,
+        "loci_matched_multi_ref": 44,
+        "locus_concordance": 0.6086221470836856,
+        "name_concordance_before": 0.7555555555555555,
+        "after_identical": 538,
+        "after_strong": 140,
+        "after_same_family": 41,
+        "after_unrelated": 1,
+        "after_reference_missing": 0,
+        "name_concordance_after": 0.9416666666666667,
+        "only_amrfinder:counterpart_exists": 3.0,
+        "only_amrfinder:no_counterpart": 387.0,
+        "only_rgi:counterpart_exists": null,
+        "only_rgi:no_counterpart": null,
+        "only_resfinder:counterpart_exists": 3.0,
+        "only_resfinder:no_counterpart": 70.0
+      },
+      {
+        "pair": "rgi-resfinder",
+        "genomes": 100,
+        "loci_union": 3698,
+        "loci_matched": 704,
+        "loci_matched_multi_ref": 32,
+        "locus_concordance": 0.1903731746890211,
+        "name_concordance_before": 0.5525568181818182,
+        "after_identical": 425,
+        "after_strong": 206,
+        "after_same_family": 69,
+        "after_unrelated": 4,
+        "after_reference_missing": 0,
+        "name_concordance_after": 0.8963068181818182,
+        "only_amrfinder:counterpart_exists": null,
+        "only_amrfinder:no_counterpart": null,
+        "only_rgi:counterpart_exists": 84.0,
+        "only_rgi:no_counterpart": 2821.0,
+        "only_resfinder:counterpart_exists": 41.0,
+        "only_resfinder:no_counterpart": 48.0
+      }
+    ]
+  }
+}
